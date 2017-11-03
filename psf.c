@@ -5,7 +5,7 @@
 
 #include <string.h>
 
-#include "CLIcore.h"
+#include "CommandLineInterface/CLIcore.h"
 
 #include "COREMOD_memory/COREMOD_memory.h"
 #include "info/info.h"
