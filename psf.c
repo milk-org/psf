@@ -55,7 +55,7 @@ int_fast8_t PSF_sequence_measure_cli()
 void __attribute__ ((constructor)) libinit_psf()
 {
 	init_psf();
-	printf(" ...... Loading module %s\n", __FILE__);
+//	printf(" ...... Loading module %s\n", __FILE__);
 }
 
 int_fast8_t init_psf()
