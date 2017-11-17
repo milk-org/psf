@@ -62,7 +62,7 @@ int_fast8_t init_psf()
 {
 		
   strcpy(data.module[data.NBmodule].name,__FILE__);
-  strcpy(data.module[data.NBmodule].info,"memory management for images and variables");
+  strcpy(data.module[data.NBmodule].info,"milk    - Memory management for images and variables");
   data.NBmodule++;
 
 	
