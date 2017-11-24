@@ -61,8 +61,9 @@ void __attribute__ ((constructor)) libinit_psf()
 int_fast8_t init_psf()
 {
 		
-  strcpy(data.module[data.NBmodule].name,__FILE__);
-  strcpy(data.module[data.NBmodule].info,"milk    - Memory management for images and variables");
+  strcpy(data.module[data.NBmodule].name, __FILE__);
+  strcpy(data.module[data.NBmodule].package, "milk");
+  strcpy(data.module[data.NBmodule].info, "Memory management for images and variables");
   data.NBmodule++;
 
 	
