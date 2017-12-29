@@ -55,7 +55,12 @@ int_fast8_t PSF_sequence_measure_cli()
 void __attribute__ ((constructor)) libinit_psf()
 {
 	init_psf();
-//	printf(" ...... Loading module %s\n", __FILE__);
+
+	if(data.progStatus>0)
+	{
+		printf("  Found unloaded shared object in ./libs/ -> LOADING module %s\n", __FILE__);
+		fflush(stdout);
+	}	
 }
 
 int_fast8_t init_psf()
