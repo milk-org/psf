@@ -55,22 +55,11 @@ int_fast8_t PSF_sequence_measure_cli()
 void __attribute__ ((constructor)) libinit_psf()
 {
 	init_psf();
-
-	if(data.progStatus>0)
-	{
-		printf("  Found unloaded shared object in ./libs/ -> LOADING module %s\n", __FILE__);
-		fflush(stdout);
-	}	
+	RegisterModule(__FILE__, "milk", "Point Spread Function analysis");
 }
 
 int_fast8_t init_psf()
 {
-		
-  strcpy(data.module[data.NBmodule].name, __FILE__);
-  strcpy(data.module[data.NBmodule].package, "milk");
-  strcpy(data.module[data.NBmodule].info, "Memory management for images and variables");
-  data.NBmodule++;
-
 	
   strcpy(data.cmd[data.NBcmd].key,"psfseqmeas");
   strcpy(data.cmd[data.NBcmd].module,__FILE__);
