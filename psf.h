@@ -2,7 +2,7 @@
 #define _PSF_H
 
 
-
+void __attribute__ ((constructor)) libinit_psf();
 int_fast8_t init_psf();
 
 

@@ -22,6 +22,8 @@
 
 extern DATA data;
 
+static int INITSTATUS_psf = 0;
+
 double FWHM_MEASURED;
 
 
@@ -54,8 +56,12 @@ int_fast8_t PSF_sequence_measure_cli()
 
 void __attribute__ ((constructor)) libinit_psf()
 {
-	init_psf();
-	RegisterModule(__FILE__, "milk", "Point Spread Function analysis");
+	if ( INITSTATUS_psf == 0 )
+	{
+		init_psf();
+		RegisterModule(__FILE__, "milk", "Point Spread Function analysis");
+		INITSTATUS_psf = 1;
+	}
 }
 
 int_fast8_t init_psf()
