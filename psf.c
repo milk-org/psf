@@ -20,7 +20,7 @@
 
 #include "psf/psf.h"
 
-extern DATA data;
+//extern struct DATA data;
 
 static int INITSTATUS_psf = 0;
 
