@@ -20,24 +20,60 @@
 
 #include "psf/psf.h"
 
-//extern struct DATA data;
 
-static int INITSTATUS_psf = 0;
+
+
+
+
+
+
+/* ================================================================== */
+/* ================================================================== */
+/*            MODULE INFO                                             */
+/* ================================================================== */
+/* ================================================================== */
+
+// module default short name
+// all CLI calls to this module functions will be <shortname>.<funcname>
+// if set to "", then calls use <funcname>
+#define MODULE_SHORTNAME_DEFAULT ""
+
+// Module short description 
+#define MODULE_DESCRIPTION       "Point Spread Function analysis"
+
+// Application to which module belongs
+#define MODULE_APPLICATION       "milk"
+
+
+
+
+
+
+
+//extern struct DATA data;
 
 double FWHM_MEASURED;
 
 
 
-// CLI commands
+
+/* ================================================================== */
+/* ================================================================== */
+/*            INITIALIZE LIBRARY                                      */
+/* ================================================================== */
+/* ================================================================== */
+
+// Module initialization macro in CLIcore.h
+// macro argument defines module name for bindings
 //
-// function CLI_checkarg used to check arguments
-// 1: float
-// 2: long
-// 3: string
-// 4: existing image
-//
+INIT_MODULE_LIB(psf)
 
 
+/* ================================================================== */
+/* ================================================================== */
+/*            COMMAND LINE INTERFACE (CLI) FUNCTIONS                  */
+/* ================================================================== */
+/* ================================================================== */
 
 
 
@@ -64,19 +100,10 @@ errno_t PSF_sequence_measure_cli()
 
 
 
-void __attribute__ ((constructor)) libinit_psf()
-{
-	if ( INITSTATUS_psf == 0 )
-	{
-		init_psf();
-		RegisterModule(__FILE__, "milk", "Point Spread Function analysis");
-		INITSTATUS_psf = 1;
-	}
-}
 
 
 
-errno_t init_psf()
+static errno_t init_module_CLI()
 {
     RegisterCLIcommand(
         "psfseqmeas",

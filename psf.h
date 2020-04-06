@@ -4,8 +4,6 @@
 
 void __attribute__ ((constructor)) libinit_psf();
 
-errno_t init_psf();
-
 
 
 imageID PSF_makeChromatPSF(
