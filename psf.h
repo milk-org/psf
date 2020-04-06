@@ -2,7 +2,7 @@
 #define _PSF_H
 
 
-void __attribute__ ((constructor)) libinit_psf();
+void __attribute__((constructor)) libinit_psf();
 
 
 
