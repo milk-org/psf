@@ -36,7 +36,7 @@
 // module default short name
 // all CLI calls to this module functions will be <shortname>.<funcname>
 // if set to "", then calls use <funcname>
-#define MODULE_SHORTNAME_DEFAULT ""
+#define MODULE_SHORTNAME_DEFAULT "psf"
 
 // Module short description
 #define MODULE_DESCRIPTION       "Point Spread Function analysis"
@@ -134,8 +134,8 @@ imageID PSF_makeChromatPSF(
     const char *out_name
 )
 {
-    imageID  ID_in;
-    imageID  ID_out;
+    imageID  IDin;
+    imageID  IDout;
     uint32_t xsize, ysize;
     imageID  IDamp;
     imageID  IDpha;
@@ -162,7 +162,7 @@ imageID PSF_makeChromatPSF(
         exit(0);
     }
 
-    ID_out = create_2Dimage_ID(out_name, xsize, ysize);
+    IDout = create_2Dimage_ID(out_name, xsize, ysize);
     list_image_ID();
 
     for(step = 0; step < NBstep; step ++)
@@ -206,7 +206,7 @@ imageID PSF_makeChromatPSF(
         arith_image_cstpow("tmpamp", 2.0, "tmpint");
         delete_image_ID("tmpamp");
         list_image_ID();
-        ID_in = image_ID("tmpint");
+        IDin = image_ID("tmpint");
         for(uint32_t ii = 0; ii < xsize; ii++)
             for(uint32_t jj = 0; jj < ysize; jj++)
             {
@@ -218,11 +218,11 @@ imageID PSF_makeChromatPSF(
                 t = y - j;
                 if((i < xsize - 1) && (j < ysize - 1) && (i > -1) && (j > -1))
                 {
-                    tmp = (1.0 - u) * (1.0 - t) * data.image[ID_in].array.F[j * xsize + i];
-                    tmp += (1.0 - u) * t * data.image[ID_in].array.F[(j + 1) * xsize + i];
-                    tmp += u * (1.0 - t) * data.image[ID_in].array.F[j * xsize + i + 1];
-                    tmp += u * t * data.image[ID_in].array.F[(j + 1) * xsize + i + 1];
-                    data.image[ID_out].array.F[jj * xsize + ii] += mcoeff * tmp / coeff / coeff;
+                    tmp = (1.0 - u) * (1.0 - t) * data.image[IDin].array.F[j * xsize + i];
+                    tmp += (1.0 - u) * t * data.image[IDin].array.F[(j + 1) * xsize + i];
+                    tmp += u * (1.0 - t) * data.image[IDin].array.F[j * xsize + i + 1];
+                    tmp += u * t * data.image[IDin].array.F[(j + 1) * xsize + i + 1];
+                    data.image[IDout].array.F[jj * xsize + ii] += mcoeff * tmp / coeff / coeff;
                 }
             }
         delete_image_ID("tmpint");
@@ -230,7 +230,7 @@ imageID PSF_makeChromatPSF(
 
     printf("\n");
 
-    return ID_out;
+    return IDout;
 }
 
 
@@ -244,7 +244,7 @@ errno_t PSF_finddiskcent(
 )
 {
     // minimizes flux outside disk
-    float    xc, yc, xcb, ycb;
+    float    xcb, ycb;
     imageID  ID;
     imageID  IDd;
     uint32_t size;
@@ -252,7 +252,6 @@ errno_t PSF_finddiskcent(
     float    totin, totout;
     float    v, value, bvalue;
     float    xcstart, xcend, ycstart, ycend;
-    long     iter;
     long     NBiter = 20;
 
     ID = image_ID(ID_name);
@@ -268,12 +267,12 @@ errno_t PSF_finddiskcent(
     ycb = 0.0;
 
     bvalue = arith_image_total(ID_name);
-    for(iter = 0; iter < NBiter; iter++)
+    for(long iter = 0; iter < NBiter; iter++)
     {
         fprintf(stderr, "iter %ld / %ld  (%f %f  %f %f   %f %f) %g\n", iter, NBiter,
                 xcstart, xcend, ycstart, ycend, xcb, ycb, bvalue);
-        for(xc = xcstart; xc < xcend; xc += step)
-            for(yc = ycstart; yc < ycend; yc += step)
+        for(float xc = xcstart; xc < xcend; xc += step)
+            for(float yc = ycstart; yc < ycend; yc += step)
             {
                 IDd = make_subpixdisk("tmpd1", size, size, xc, yc, rad);
 
