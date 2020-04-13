@@ -8,13 +8,14 @@
 #include "CommandLineInterface/CLIcore.h"
 
 #include "COREMOD_memory/COREMOD_memory.h"
-#include "info/info.h"
 #include "COREMOD_tools/COREMOD_tools.h"
+#include "COREMOD_iofits/COREMOD_iofits.h"
+#include "COREMOD_arith/COREMOD_arith.h"
+
 #include "image_gen/image_gen.h"
 #include "image_basic/image_basic.h"
 #include "image_filter/image_filter.h"
-#include "COREMOD_iofits/COREMOD_iofits.h"
-#include "COREMOD_arith/COREMOD_arith.h"
+
 #include "fft/fft.h"
 
 
@@ -829,8 +830,8 @@ errno_t center_PSF_alone(
     /*remove_cosmics(ID_name,"tmpcen");*/
     copy_image_ID(ID_name, "tmpcen", 0);
 
-    arith_image_trunc("tmpcen", img_percentile("tmpcen", 0.99),
-                      img_percentile("tmpcen", 1.0), "tmpcen1");
+    arith_image_trunc("tmpcen", arith_image_percentile("tmpcen", 0.99),
+                      arith_image_percentile("tmpcen", 1.0), "tmpcen1");
     delete_image_ID("tmpcen");
 
     center_PSF("tmpcen1", xcenter, ycenter, box_size);
@@ -1026,7 +1027,7 @@ float get_sigma(
     }
     else
     {
-        C = img_percentile(ID_name, 0.5);
+        C = arith_image_percentile(ID_name, 0.5);
     }
     printf("%f\n", C);
     fflush(stdout);
@@ -1166,8 +1167,8 @@ float get_sigma_alone(
 
     if(FAST == 0)
     {
-        arith_image_trunc("tmpcen", img_percentile("tmpcen", 0.9),
-                          img_percentile("tmpcen", 1.0), "tmpcen1");
+        arith_image_trunc("tmpcen", arith_image_percentile("tmpcen", 0.9),
+                          arith_image_percentile("tmpcen", 1.0), "tmpcen1");
         delete_image_ID("tmpcen");
         center_PSF("tmpcen1", xcenter, ycenter, box_size);
         delete_image_ID("tmpcen1");
@@ -1218,8 +1219,8 @@ errno_t extract_psf(
     box_size = naxes[0] / 2 - 1;
     /*remove_cosmics(ID_name,"tmpcen");*/
     copy_image_ID(ID_name, "tmpcen", 0);
-    arith_image_trunc("tmpcen", img_percentile("tmpcen", 0.99),
-                      img_percentile("tmpcen", 1.0), "tmpcen1");
+    arith_image_trunc("tmpcen", arith_image_percentile("tmpcen", 0.99),
+                      arith_image_percentile("tmpcen", 1.0), "tmpcen1");
     delete_image_ID("tmpcen");
     center_PSF("tmpcen1", xcenter, ycenter, box_size);
 
@@ -1475,10 +1476,10 @@ float psf_measure_SR(
 
     /*remove_cosmics(ID_name,"tmpcen");*/
     copy_image_ID(ID_name, "tmpcen", 0);
-    background = img_percentile("tmpcen", 0.5);
+    background = arith_image_percentile("tmpcen", 0.5);
 
-    arith_image_trunc("tmpcen", img_percentile("tmpcen", 0.99),
-                      img_percentile("tmpcen", 1.0), "tmpcen1");
+    arith_image_trunc("tmpcen", arith_image_percentile("tmpcen", 0.99),
+                      arith_image_percentile("tmpcen", 1.0), "tmpcen1");
     delete_image_ID("tmpcen");
 
     center_PSF("tmpcen1", xcenter, ycenter, box_size);

@@ -1,9 +1,29 @@
-project(lib_psf_project)
+# library name
+set(LIBNAME "milkpsf")
+
+
+set(SOURCEFILES
+	psf.c)
+
+set(INCLUDEFILES
+	psf.h)
+
+
+# DEFAULT SETTINGS 
+# Do not change unless needed
+# =====================================================================
+
+project(lib_${LIBNAME}_project)
 
 include_directories ("${PROJECT_SOURCE_DIR}/src")
 include_directories ("${PROJECT_SOURCE_DIR}/..")
-add_library(psf SHARED psf.c)
 
-install(TARGETS psf DESTINATION lib)
-install(FILES psf.h DESTINATION include)
+
+# Library can be compiled from multiple source files
+# Convention: the main souce file is named <libname>.c
+# 
+add_library(${LIBNAME} SHARED ${SOURCEFILES})
+
+install(TARGETS ${LIBNAME} DESTINATION lib)
+install(FILES ${INCLUDEFILES} DESTINATION include)
 
