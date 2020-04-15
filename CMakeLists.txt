@@ -1,12 +1,13 @@
 # library name
 set(LIBNAME "milkpsf")
+set(SRCNAME "psf")
 
 
 set(SOURCEFILES
-	psf.c)
+	${SRCNAME}.c)
 
 set(INCLUDEFILES
-	psf.h)
+	${SRCNAME}.h)
 
 
 # DEFAULT SETTINGS 
@@ -25,5 +26,5 @@ include_directories ("${PROJECT_SOURCE_DIR}/..")
 add_library(${LIBNAME} SHARED ${SOURCEFILES})
 
 install(TARGETS ${LIBNAME} DESTINATION lib)
-install(FILES ${INCLUDEFILES} DESTINATION include)
+install(FILES ${INCLUDEFILES} DESTINATION include/${SRCNAME})
 
