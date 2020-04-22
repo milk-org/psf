@@ -42,9 +42,6 @@
 // Module short description
 #define MODULE_DESCRIPTION       "Point Spread Function analysis"
 
-// Application to which module belongs
-#define MODULE_APPLICATION       "milk"
-
 
 
 
