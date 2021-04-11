@@ -2,6 +2,8 @@
 set(LIBNAME "milkpsf")
 set(SRCNAME "psf")
 
+message("")
+message(" SRCNAME = ${SRCNAME} -> LIBNAME = ${LIBNAME}")
 
 set(SOURCEFILES
 	${SRCNAME}.c)
