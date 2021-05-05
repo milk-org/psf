@@ -323,6 +323,11 @@ errno_t PSF_finddiskcent_alone(
     float *result;
 
     result = (float *) malloc(sizeof(float) * 2);
+    if(result == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     PSF_finddiskcent(ID_name, rad, result);
     free(result);
 
@@ -390,7 +395,13 @@ float measure_enc_NRJ(
     naxes[1] = data.image[ID].md[0].size[1];
 
     arraysize = (long)(sqrt(2) * naxes[0]);
+
     total = (float *) malloc(sizeof(float) * arraysize);
+    if(total == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     for(uint32_t ii = 0; ii < arraysize; ii++)
     {
         total[ii] = 0.0;
@@ -461,8 +472,20 @@ errno_t measure_enc_NRJ1(
     naxes[1] = data.image[ID].md[0].size[1];
 
     arraysize = (uint32_t)(sqrt(2) * naxes[0]);
+
     total = (float *) malloc(sizeof(float) * arraysize);
+    if(total == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     ENCNRJ = (float *) malloc(sizeof(float) * arraysize);
+    if(ENCNRJ == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
+
     for(index = 0; index < arraysize; index++)
     {
         ENCNRJ[index] = 0.0;
@@ -531,9 +554,28 @@ float measure_FWHM(
     //nelements = naxes[0] * naxes[1];
 
     dist = (float *) malloc(nb_step * sizeof(float));
+    if(dist == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     mean = (float *) malloc(nb_step * sizeof(float));
+    if(mean == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     rms = (float *) malloc(nb_step * sizeof(float));
+    if(rms == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     counts = (long *) malloc(nb_step * sizeof(long));
+    if(counts == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
 
     for(i = 0; i < nb_step; i++)
     {
@@ -815,7 +857,17 @@ errno_t center_PSF_alone(
     uint32_t naxes[2];
 
     xcenter = (double *) malloc(sizeof(double));
+    if(xcenter == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     ycenter = (double *) malloc(sizeof(double));
+    if(ycenter == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
@@ -1012,9 +1064,24 @@ float get_sigma(
             {
                 nbpixel += 1;
             }
+
     x1 = (float *) malloc(nbpixel * sizeof(float));
+    if(x1 == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     y1 = (float *) malloc(nbpixel * sizeof(float));
+    if(y1 == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     sig = (float *) malloc(nbpixel * sizeof(float));
+    if(sig == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
 
     printf("background is ");
     fflush(stdout);
@@ -1149,7 +1216,16 @@ float get_sigma_alone(
     int FWHM = 0;
 
     xcenter = (double *) malloc(sizeof(double));
+    if(xcenter == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     ycenter = (double *) malloc(sizeof(double));
+    if(ycenter == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
 
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
@@ -1206,7 +1282,17 @@ errno_t extract_psf(
     uint32_t naxes[2];
 
     xcenter = (double *) malloc(sizeof(double));
+    if(xcenter == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     ycenter = (double *) malloc(sizeof(double));
+    if(ycenter == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
     naxes[1] = data.image[ID].md[0].size[1];
@@ -1334,6 +1420,11 @@ errno_t psf_variance(
 
     printf("%d files\n", Nb_files);
     IDn = (int *) malloc(Nb_files * sizeof(int));
+    if(IDn == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     j = 0;
     i = 0;
     file_nb = 0;
@@ -1460,8 +1551,19 @@ float psf_measure_SR(
     peakii = 0;
     peakjj = 0;
     Csize2 = Csize * fzoomfactor;
+
     xcenter = (double *) malloc(sizeof(double));
+    if(xcenter == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     ycenter = (double *) malloc(sizeof(double));
+    if(ycenter == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
 
     ID = image_ID(ID_name);
     naxes[0] = data.image[ID].md[0].size[0];
@@ -1590,7 +1692,17 @@ imageID PSF_coaddbest(
     //  printf("\"%s\" %ld SIZE = %ld %ld\n",IDcin_name, IDcin, xsize,ysize);
 
     flux_array = (double *) malloc(sizeof(double) * ksize);
+    if(flux_array == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     imgindex = (long *) malloc(sizeof(long) * ksize);
+    if(imgindex == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
 
     IDmask = make_subpixdisk("tmpMask", xsize, ysize, xsize / 2, ysize / 2, r_pix);
 
@@ -1661,7 +1773,16 @@ errno_t PSF_sequence_measure(
     printf("box size : %f -> %ld\n", PSFsizeEst, boxsize);
 
     xcenter = (double *) malloc(sizeof(double));
+    if(xcenter == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
+
     ycenter = (double *) malloc(sizeof(double));
+    if(ycenter == NULL) {
+        PRINT_ERROR("malloc returns NULL pointer");
+        abort();
+    }
 
     IDin = image_ID(IDin_name);
     xsize = data.image[IDin].md[0].size[0];
