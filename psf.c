@@ -193,16 +193,16 @@ imageID PSF_makeChromatPSF(
 
         arith_image_cstmult(pha_name, coeff, "phamult");
         mk_complex_from_amph(amp_name, "phamult", "tmpimc", 0);
-        delete_image_ID("phamult");
+        delete_image_ID("phamult", DELETE_IMAGE_ERRMODE_WARNING);
         permut("tmpimc");
         do2dfft("tmpimc", "tmpimc1");
-        delete_image_ID("tmpimc");
+        delete_image_ID("tmpimc", DELETE_IMAGE_ERRMODE_WARNING);
         permut("tmpimc1");
         mk_amph_from_complex("tmpimc1", "tmpamp", "tmppha", 0);
-        delete_image_ID("tmpimc1");
-        delete_image_ID("tmppha");
+        delete_image_ID("tmpimc1", DELETE_IMAGE_ERRMODE_WARNING);
+        delete_image_ID("tmppha", DELETE_IMAGE_ERRMODE_WARNING);
         arith_image_cstpow("tmpamp", 2.0, "tmpint");
-        delete_image_ID("tmpamp");
+        delete_image_ID("tmpamp", DELETE_IMAGE_ERRMODE_WARNING);
         list_image_ID();
         IDin = image_ID("tmpint");
         for(uint32_t ii = 0; ii < xsize; ii++)
@@ -223,7 +223,7 @@ imageID PSF_makeChromatPSF(
                     data.image[IDout].array.F[jj * xsize + ii] += mcoeff * tmp / coeff / coeff;
                 }
             }
-        delete_image_ID("tmpint");
+        delete_image_ID("tmpint", DELETE_IMAGE_ERRMODE_WARNING);
     }
 
     printf("\n");
@@ -295,7 +295,7 @@ errno_t PSF_finddiskcent(
                     ycb = yc;
                     bvalue = value;
                 }
-                delete_image_ID("tmpd1");
+                delete_image_ID("tmpd1", DELETE_IMAGE_ERRMODE_WARNING);
             }
         xcstart = 0.5 * (xcstart + xcb);
         xcend = 0.5 * (xcend + xcb);
@@ -718,7 +718,7 @@ errno_t center_PSF(
         ocentery = centery;
     }
 
-    delete_image_ID("PSFctmp");
+    delete_image_ID("PSFctmp", DELETE_IMAGE_ERRMODE_WARNING);
 
 
     xcenter[0] = centerx;
@@ -881,10 +881,10 @@ errno_t center_PSF_alone(
 
     arith_image_trunc("tmpcen", arith_image_percentile("tmpcen", 0.99),
                       arith_image_percentile("tmpcen", 1.0), "tmpcen1");
-    delete_image_ID("tmpcen");
+    delete_image_ID("tmpcen", DELETE_IMAGE_ERRMODE_WARNING);
 
     center_PSF("tmpcen1", xcenter, ycenter, box_size);
-    delete_image_ID("tmpcen1");
+    delete_image_ID("tmpcen1", DELETE_IMAGE_ERRMODE_WARNING);
 
     printf("center : %f %f\n", xcenter[0], ycenter[0]);
 
@@ -1242,9 +1242,9 @@ float get_sigma_alone(
     {
         arith_image_trunc("tmpcen", arith_image_percentile("tmpcen", 0.9),
                           arith_image_percentile("tmpcen", 1.0), "tmpcen1");
-        delete_image_ID("tmpcen");
+        delete_image_ID("tmpcen", DELETE_IMAGE_ERRMODE_WARNING);
         center_PSF("tmpcen1", xcenter, ycenter, box_size);
-        delete_image_ID("tmpcen1");
+        delete_image_ID("tmpcen1", DELETE_IMAGE_ERRMODE_WARNING);
 
         sigma = get_sigma(ID_name, xcenter[0], ycenter[0], "");
     }
@@ -1304,12 +1304,12 @@ errno_t extract_psf(
     copy_image_ID(ID_name, "tmpcen", 0);
     arith_image_trunc("tmpcen", arith_image_percentile("tmpcen", 0.99),
                       arith_image_percentile("tmpcen", 1.0), "tmpcen1");
-    delete_image_ID("tmpcen");
+    delete_image_ID("tmpcen", DELETE_IMAGE_ERRMODE_WARNING);
     center_PSF("tmpcen1", xcenter, ycenter, box_size);
 
     printf("PSF center = %f %f   extracting window size %ld\n", xcenter[0],
            ycenter[0], size);
-    delete_image_ID("tmpcen1");
+    delete_image_ID("tmpcen1", DELETE_IMAGE_ERRMODE_WARNING);
     /*  arith_image_extract2D(ID_name,out_name,size,size,((long) (xcenter[0]+0.5))-(size/2),((long) (ycenter[0]+0.5))-(size/2));*/
 
 
@@ -1321,7 +1321,7 @@ errno_t extract_psf(
                         ycenter[0] - ((long)(ycenter[0] + 0.5)));
     //arith_image_translate("tmpf", out_name,xcenter[0]-((long) (xcenter[0]+0.5)), ycenter[0]-((long) (ycenter[0]+0.5)));
 
-    delete_image_ID("tmpf");
+    delete_image_ID("tmpf", DELETE_IMAGE_ERRMODE_WARNING);
     free(xcenter);
     free(ycenter);
 
@@ -1579,10 +1579,10 @@ float psf_measure_SR(
 
     arith_image_trunc("tmpcen", arith_image_percentile("tmpcen", 0.99),
                       arith_image_percentile("tmpcen", 1.0), "tmpcen1");
-    delete_image_ID("tmpcen");
+    delete_image_ID("tmpcen", DELETE_IMAGE_ERRMODE_WARNING);
 
     center_PSF("tmpcen1", xcenter, ycenter, box_size);
-    delete_image_ID("tmpcen1");
+    delete_image_ID("tmpcen1", DELETE_IMAGE_ERRMODE_WARNING);
 
     printf("center : %f %f\n", xcenter[0], ycenter[0]);
 
@@ -1654,8 +1654,8 @@ float psf_measure_SR(
         SR = max / total * fzoomfactor / factor;
         save_fl_fits("tmpsr", "!tmpsr");
         save_fl_fits("tmpsrz", "!tmpsrz");
-        delete_image_ID("tmpsr");
-        delete_image_ID("tmpsrz");
+        delete_image_ID("tmpsr", DELETE_IMAGE_ERRMODE_WARNING);
+        delete_image_ID("tmpsrz", DELETE_IMAGE_ERRMODE_WARNING);
 
         printf("SR = %f\n", SR);
     }
@@ -1717,7 +1717,7 @@ imageID PSF_coaddbest(
         }
     }
 
-    delete_image_ID("tmpMask");
+    delete_image_ID("tmpMask", DELETE_IMAGE_ERRMODE_WARNING);
 
     quick_sort2l(flux_array, imgindex, ksize);
 
