@@ -160,7 +160,7 @@ imageID PSF_makeChromatPSF(
         exit(0);
     }
 
-    IDout = create_2Dimage_ID(out_name, xsize, ysize);
+    create_2Dimage_ID(out_name, xsize, ysize, &IDout);
     list_image_ID();
 
     for(step = 0; step < NBstep; step ++)
@@ -1363,7 +1363,7 @@ imageID extract_psf_photcent(
 
     printf("Photocenter = %lf %lf\n", totx, toty);
 
-    IDout = create_2Dimage_ID(out_name, size, size);
+    create_2Dimage_ID(out_name, size, size, &IDout);
     ii0 = (long) totx;
     jj0 = (long) toty;
 
@@ -1449,10 +1449,8 @@ errno_t psf_variance(
     naxes[0] = data.image[IDn[0]].md[0].size[0];
     naxes[1] = data.image[IDn[0]].md[0].size[1];
 
-    create_2Dimage_ID(ID_out_m, naxes[0], naxes[1]);
-    IDoutm = image_ID(ID_out_m);
-    create_2Dimage_ID(ID_out_v, naxes[0], naxes[1]);
-    IDoutv = image_ID(ID_out_v);
+    create_2Dimage_ID(ID_out_m, naxes[0], naxes[1], &IDoutm);
+    create_2Dimage_ID(ID_out_v, naxes[0], naxes[1], &IDoutv);
     /*  printf("%d %d - starting computations\n",naxes[0],naxes[1]);*/
     fflush(stdout);
     for(jj = 0; jj < naxes[1]; jj++)
@@ -1501,8 +1499,7 @@ imageID combine_2psf(
     ID2 = image_ID(ID_name2);
     naxes[0] = data.image[ID1].md[0].size[0];
     naxes[1] = data.image[ID1].md[0].size[1];
-    create_2Dimage_ID(ID_name, naxes[0], naxes[1]);
-    IDout = image_ID(ID_name);
+    create_2Dimage_ID(ID_name, naxes[0], naxes[1], &IDout);
 
     for(uint32_t jj = 0; jj < naxes[1]; jj++)
         for(uint32_t ii = 0; ii < naxes[0]; ii++)
@@ -1721,7 +1718,7 @@ imageID PSF_coaddbest(
 
     quick_sort2l(flux_array, imgindex, ksize);
 
-    IDout = create_3Dimage_ID(IDout_name, xsize, ysize, ksize);
+    create_3Dimage_ID(IDout_name, xsize, ysize, ksize, &IDout);
 
     for(kk = 0; kk < ksize; kk++)
     {
@@ -1797,7 +1794,7 @@ errno_t PSF_sequence_measure(
         zsize = 1;
     }
 
-    IDtmp = create_2Dimage_ID("_tmppsfim", xsize, ysize);
+    create_2Dimage_ID("_tmppsfim", xsize, ysize, &IDtmp);
 
     fpout = fopen(outfname, "w");
     for(kk = 0; kk < zsize; kk++)
