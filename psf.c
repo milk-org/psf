@@ -1649,8 +1649,8 @@ float psf_measure_SR(
 
         printf("ratio = %f  \n", max / total * fzoomfactor);
         SR = max / total * fzoomfactor / factor;
-        save_fl_fits("tmpsr", "!tmpsr");
-        save_fl_fits("tmpsrz", "!tmpsrz");
+        save_fl_fits("tmpsr", "tmpsr");
+        save_fl_fits("tmpsrz", "tmpsrz");
         delete_image_ID("tmpsr", DELETE_IMAGE_ERRMODE_WARNING);
         delete_image_ID("tmpsrz", DELETE_IMAGE_ERRMODE_WARNING);
 
@@ -1806,7 +1806,7 @@ errno_t PSF_sequence_measure(
         printf("%5ld   CENTER = %f %f\n", kk, xcenter[0], ycenter[0]);
         fprintf(fpout, "%ld %20f %20f\n", kk, xcenter[0], ycenter[0]);
 
-        //	sprintf(fname, "!_tmppsfim_%04ld.fits", kk);
+        //	sprintf(fname, "_tmppsfim_%04ld.fits", kk);
         //	save_fits("_tmppsfim", fname);
     }
     fclose(fpout);
